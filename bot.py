@@ -128,7 +128,7 @@ async def poll_user(name):
     while is_user_followed(name):
         try:
             r = await get_replays(name)
-            print(r[0]["started"], data["followed-users"][name]["last-seen"])
+            bot.logger.debug(r[0]["started"], data["followed-users"][name]["last-seen"])
             if r[0]["started"] != data["followed-users"][name]["last-seen"]:
                 msg = await render(name, r)
                 await send_all(message=msg)
