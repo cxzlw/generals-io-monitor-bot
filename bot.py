@@ -173,7 +173,8 @@ async def pub(event: Event):
             if username in data["followed-users"]:
                 data["followed-users"][username]["enabled"] = False
                 await bot.send(event, message="取关成功")
-
+            else:
+                await bot.send(event, message="未关注该用户")
 
 # @bot.on_message('group')
 # async def publ(event: Event):
