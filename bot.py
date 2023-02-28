@@ -109,8 +109,8 @@ async def render(username, replay_json):
         data["followed-users"][username]["star"][mode] = now_star
         message += f"⭐  {now_star} &#91;{star_icon}&#93; 🏆 #{now_rank} &#91;{rank_icon}&#93;\n"
 
-    message += f"开始时间: {start_time}\n"
-    message += f"结束时间: {end_time}\n"
+    message += f"开始时间: {start_time.strftime('%Y-%m-%d %H:%M:%S')}\n"
+    message += f"结束时间: {end_time.strftime('%Y-%m-%d %H:%M:%S')}\n"
     message += f"用时: {used_time}\n"
     message += f"回放: https://generals.io/replays/{replay_id}"
     return message
