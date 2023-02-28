@@ -8,6 +8,12 @@ packages = [{include = "generals_io_monitor_bot"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+aiocqhttp = "^1.4.3"
+httpx = "^0.23.3"
+ujson = "^5.7.0"
+pyyaml = "^6.0"
+aiofiles = "^23.1.0"
+arrow = "^1.2.3"
 
 
 [build-system]
