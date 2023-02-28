@@ -137,11 +137,11 @@ async def poll_user(name):
             traceback.print_exc()
 
 
-@bot.on_message('private')
-async def priv(event: Event):
-    print(event.message)
-    print(event.user_id)
-    await bot.send_private_msg(user_id=event.user_id, message=event.message)
+# @bot.on_message('private')
+# async def priv(event: Event):
+#     print(event.message)
+#     print(event.user_id)
+#     await bot.send_private_msg(user_id=event.user_id, message=event.message)
 
 
 @bot.on_message('group')
@@ -160,8 +160,8 @@ async def pub(event: Event):
                     replay = await get_replays(username)
                     if len(replay) > 0:
                         data["followed-users"][username] = {'enabled': True, 'last-seen': 0,
-                                                           'rank': {'1v1': 0, '2v2': 0, 'FFA': 0},
-                                                           'star': {'1v1': 0.0, '2v2': 0.0, 'FFA': 0.0}}
+                                                            'rank': {'1v1': 0, '2v2': 0, 'FFA': 0},
+                                                            'star': {'1v1': 0.0, '2v2': 0.0, 'FFA': 0.0}}
                         bot.loop.create_task(poll_user(username))
                         await bot.send(event, message="关注成功")
                     else:
@@ -182,9 +182,7 @@ async def pub(event: Event):
 #     await bot.send_private_msg(user_id=event.user_id, message=event.message)
 
 async def main_coroutine():
-    while True:
-        print("s", end="")
-        await asyncio.sleep(1)
+    pass
 
 
 async def save_data():
