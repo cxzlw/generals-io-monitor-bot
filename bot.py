@@ -3,6 +3,7 @@ import os
 import time
 import traceback
 import aiocqhttp
+import pytz
 import aiofiles
 import httpx
 from aiocqhttp import CQHttp, Event, Message
@@ -77,10 +78,10 @@ def is_group_enabled(group_id):
 
 
 async def render(username, replay_json):
-    start_time = datetime.datetime.fromtimestamp(replay_json[0]["started"] // 1000)
+    start_time = datetime.datetime.fromtimestamp(replay_json[0]["started"] // 1000, tz=pytz.timezone("Etc/GMT-8"))
     mode = replay2mode[replay_json[0]["type"]]
     replay_id = replay_json[0]["id"]
-    end_time = datetime.datetime.fromtimestamp(int(time.time()))
+    end_time = datetime.datetime.fromtimestamp(int(time.time()), tz=pytz.timezone("Etc/GMT-8"))
     used_time = end_time - start_time
     message = ""
     message += f"{username}刚刚结束了一场对局\n"
@@ -175,6 +176,7 @@ async def pub(event: Event):
                 await bot.send(event, message="取关成功")
             else:
                 await bot.send(event, message="未关注该用户")
+
 
 # @bot.on_message('group')
 # async def publ(event: Event):
