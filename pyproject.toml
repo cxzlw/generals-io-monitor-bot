@@ -4,7 +4,6 @@ version = "0.1.0"
 description = ""
 authors = ["cxzlw <wsc_zds@qq.com>"]
 readme = "README.md"
-packages = [{include = "generals_io_monitor_bot"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
