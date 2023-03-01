@@ -81,8 +81,8 @@ async def render(username, replay_json):
     start_time = datetime.datetime.fromtimestamp(replay_json[0]["started"] // 1000, tz=pytz.timezone("Etc/GMT-8"))
     mode = replay2mode[replay_json[0]["type"]]
     replay_id = replay_json[0]["id"]
-    end_time = datetime.datetime.fromtimestamp(int(time.time()), tz=pytz.timezone("Etc/GMT-8"))
-    used_time = end_time - start_time
+    used_time = datetime.timedelta(seconds=replay_json[0]["turns"] / 2)
+    end_time = start_time + used_time
     message = ""
     message += f"{username}刚刚结束了一场对局\n"
     message += f"模式: {mode}\n"
