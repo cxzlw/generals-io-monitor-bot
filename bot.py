@@ -41,7 +41,7 @@ else:
 
 async def get_replays(username: str) -> list:
     async with httpx.AsyncClient() as client:
-        resp = await client.get(f"https://generals.io/api/replaysForUsername?u={username}&offset=0&count=200")
+        resp = await client.get(f"https://generals.io/api/replaysForUsername?u={username}&offset=0&count=1")
     return ujson.loads(resp.content)
 
 
