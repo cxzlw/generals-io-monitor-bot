@@ -26,6 +26,8 @@ mode2rank = {
     "1v1": "duel"
 }
 
+command_handlers = dict()
+
 if os.path.exists("data.yml"):
     with open("data.yml", "r") as f:
         data = yaml.load(f, yaml.CLoader)
@@ -144,39 +146,66 @@ async def poll_user(name):
 #     print(event.user_id)
 #     await bot.send_private_msg(user_id=event.user_id, message=event.message)
 
+def register_command(name, func):
+    command_handlers[name] = func
+
+
+def on_command(name):
+    def add_handler(func):
+        register_command(name, func)
+        return func
+
+    return add_handler
+
 
 @bot.on_message('group')
-async def pub(event: Event):
+async def command_process(event: Event):
     if is_group_enabled(event.group_id):
         message = str(event.message)
-        if message.startswith("follow") and len(message) > 7:
-            username = message[7:]
-            if username in data["followed-users"]:
-                data["followed-users"][username]["enabled"] = True
+        args = message.split(" ")
+        if args[0] in command_handlers:
+            command_handlers[args[0]](event, args)
+
+
+@on_command("follow")
+def on_follow(event, args):
+    if len(args) < 2:
+        return
+    username = " ".join(args[1:])
+    if username in data["followed-users"]:
+        data["followed-users"][username]["enabled"] = True
+        bot.loop.create_task(poll_user(username))
+        await bot.send(event, message="关注成功")
+    else:
+        user_exist = await is_validate_username(username)
+        if user_exist:
+            replay = await get_replays(username)
+            if len(replay) > 0:
+                data["followed-users"][username] = {'enabled': True, 'last-seen': 0,
+                                                    'rank': {'1v1': 0, '2v2': 0, 'FFA': 0},
+                                                    'star': {'1v1': 0.0, '2v2': 0.0, 'FFA': 0.0}}
                 bot.loop.create_task(poll_user(username))
                 await bot.send(event, message="关注成功")
             else:
-                user_exist = await is_validate_username(username)
-                if user_exist:
-                    replay = await get_replays(username)
-                    if len(replay) > 0:
-                        data["followed-users"][username] = {'enabled': True, 'last-seen': 0,
-                                                            'rank': {'1v1': 0, '2v2': 0, 'FFA': 0},
-                                                            'star': {'1v1': 0.0, '2v2': 0.0, 'FFA': 0.0}}
-                        bot.loop.create_task(poll_user(username))
-                        await bot.send(event, message="关注成功")
-                    else:
-                        await bot.send(event, "用户不存在或已改名")
-                else:
-                    await bot.send(event, message="用户不存在或已改名")
-        elif message.startswith("unfollow") and len(message) > 9:
-            username = message[9:]
-            if username in data["followed-users"]:
-                data["followed-users"][username]["enabled"] = False
-                await bot.send(event, message="取关成功")
-            else:
-                await bot.send(event, message="未关注该用户")
+                await bot.send(event, "用户不存在或已改名")
+        else:
+            await bot.send(event, message="用户不存在或已改名")
 
+
+@on_command("unfollow")
+def on_unfollow(event, args):
+    if len(args) < 2:
+        return
+    username = " ".join(args[1:])
+    if username in data["followed-users"]:
+        data["followed-users"][username]["enabled"] = False
+        await bot.send(event, message="取关成功")
+    else:
+        await bot.send(event, message="未关注该用户")
+
+# @on_command("list")
+# def on_list(event, args):
+#
 
 # @bot.on_message('group')
 # async def publ(event: Event):
