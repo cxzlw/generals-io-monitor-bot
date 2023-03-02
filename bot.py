@@ -203,9 +203,11 @@ async def on_unfollow(event, args):
     else:
         await bot.send(event, message="未关注该用户")
 
-# @on_command("list")
-# def on_list(event, args):
-#
+@on_command("list")
+async def on_list(event, args):
+    message = "当前关注的玩家列表如下: "
+    message += "\n".join(data["followed-users"].keys())
+    await bot.send(event, message=message)
 
 # @bot.on_message('group')
 # async def publ(event: Event):
