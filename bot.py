@@ -217,7 +217,14 @@ async def on_list(event: Event, args):
 
 @on_command("enable")
 async def on_enable(event: Event, args):
-    print(event.sender["role"])
+    if event.sender["role"] in {"owner", "admin"} or event.user_id in data["super-users"]:
+        data["enabled-groups"][event.group_id]["enabled"] = True
+
+
+@on_command("disable")
+async def on_disable(event: Event, args):
+    if event.sender["role"] in {"owner", "admin"} or event.user_id in data["super-users"]:
+        data["enabled-groups"][event.group_id]["enabled"] = False
 
 
 async def save_data():
