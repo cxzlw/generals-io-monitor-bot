@@ -138,6 +138,8 @@ async def poll_user(name):
                 msg = await render(name, r)
                 await send_all(message=msg)
                 data["followed-users"][name]["last-seen"] = r[0]["started"]
+        except asyncio.CancelledError:
+            raise
         except Exception:
             traceback.print_exc()
 
