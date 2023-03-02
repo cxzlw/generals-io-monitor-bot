@@ -221,21 +221,19 @@ async def on_list(event, args):
 #     print(event.user_id)
 #     await bot.send_private_msg(user_id=event.user_id, message=event.message)
 
-async def main_coroutine():
-    pass
-
 
 async def save_data():
     while True:
         await asyncio.sleep(1)
         async with aiofiles.open("data.yml", "w") as f:
             await f.write(yaml.dump(data, Dumper=yaml.CDumper))
+        async with aiofiles.open("data.yml.2", "w") as f:
+            await f.write(yaml.dump(data, Dumper=yaml.CDumper))
 
 
 @bot.on_websocket_connection
 async def start_up(event):
     loop = bot.loop
-    loop.create_task(main_coroutine())
     loop.create_task(save_data())
     for user in data["followed-users"]:
         loop.create_task(poll_user(user))
