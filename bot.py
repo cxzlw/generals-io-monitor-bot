@@ -215,11 +215,6 @@ async def on_list(event, args):
     await bot.send(event, message=message)
 
 
-@on_command("exit")
-async def on_exit(event, args):
-    exit_bot(0, 0)
-
-
 # @bot.on_message('group')
 # async def publ(event: Event):
 #     print(event.message)
@@ -245,13 +240,5 @@ async def start_up(event):
     for user in data["followed-users"]:
         loop.create_task(poll_user(user))
 
-
-def exit_bot(s, f):
-    print("Bye. ")
-    bot.loop.stop()
-    sys.exit(0)
-
-
-signal.signal(signal.SIGINT, exit_bot)
 
 bot.run("127.0.0.1", 8080)
