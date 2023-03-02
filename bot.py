@@ -138,7 +138,7 @@ async def poll_user(name):
                 msg = await render(name, r)
                 await send_all(message=msg)
                 data["followed-users"][name]["last-seen"] = r[0]["started"]
-        except:
+        except Exception:
             traceback.print_exc()
 
 
@@ -246,10 +246,10 @@ async def start_up(event):
 
 def exit_bot(s, f):
     print("Bye. ")
-    bot.loop.stop()
-    sys.exit(0)
+    # bot.loop.stop()
+    # sys.exit(0)
 
 
-signal.signal(signal.SIGINT, exit_bot)
+# signal.signal(signal.SIGINT, exit_bot)
 
 bot.run("127.0.0.1", 8080)
