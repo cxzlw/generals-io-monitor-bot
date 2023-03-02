@@ -164,11 +164,14 @@ def on_command(name):
 
 @bot.on_message('group')
 async def command_process(event: Event):
+    message = str(event.message)
     if is_group_enabled(event.group_id):
-        message = str(event.message)
         args = message.split(" ")
         if args[0] in command_handlers:
             await command_handlers[args[0]](event, args)
+    elif message == "enable" and event.group_id in data["enabled-groups"]:
+        args = message.split(" ")
+        await on_enable(event, args)  # Very ugly patch.
 
 
 @on_command("follow")
