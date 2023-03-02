@@ -172,7 +172,7 @@ async def command_process(event: Event):
 
 
 @on_command("follow")
-async def on_follow(event, args):
+async def on_follow(event: Event, args):
     if len(args) < 2:
         return
     username = " ".join(args[1:])
@@ -197,7 +197,7 @@ async def on_follow(event, args):
 
 
 @on_command("unfollow")
-async def on_unfollow(event, args):
+async def on_unfollow(event: Event, args):
     if len(args) < 2:
         return
     username = " ".join(args[1:])
@@ -209,13 +209,15 @@ async def on_unfollow(event, args):
 
 
 @on_command("list")
-async def on_list(event, args):
+async def on_list(event: Event, args):
     message = "当前关注的玩家列表如下: "
     message += "\n".join(data["followed-users"].keys())
     await bot.send(event, message=message)
 
 
-
+@on_command("enable")
+async def on_enable(event: Event, args):
+    print(event.sender["role"])
 
 async def save_data():
     while True:
