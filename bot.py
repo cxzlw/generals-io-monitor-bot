@@ -215,11 +215,6 @@ async def on_list(event, args):
     await bot.send(event, message=message)
 
 
-# @bot.on_message('group')
-# async def publ(event: Event):
-#     print(event.message)
-#     print(event.user_id)
-#     await bot.send_private_msg(user_id=event.user_id, message=event.message)
 
 
 async def save_data():
