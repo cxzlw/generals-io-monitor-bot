@@ -11,6 +11,7 @@ from aiocqhttp import CQHttp, Event, Message
 import ujson
 import yaml
 import datetime
+import signal
 
 bot = CQHttp(message_class=Message)
 
@@ -214,7 +215,7 @@ async def on_list(event, args):
 
 @on_command("exit")
 async def on_exit(event, args):
-    sys.exit(0)
+    exit_bot(0, 0)
 
 
 # @bot.on_message('group')
@@ -242,5 +243,13 @@ async def start_up(event):
     for user in data["followed-users"]:
         loop.create_task(poll_user(user))
 
+
+def exit_bot(s, f):
+    print("Bye. ")
+    bot.loop.stop()
+    sys.exit(0)
+
+
+signal.signal(signal.SIGINT, exit_bot)
 
 bot.run("127.0.0.1", 8080)
