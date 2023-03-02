@@ -219,11 +219,16 @@ async def on_list(event: Event, args):
 async def on_enable(event: Event, args):
     print(event.sender["role"])
 
+
 async def save_data():
     while True:
         await asyncio.sleep(1)
+        if data is None:
+            continue
         async with aiofiles.open("data.yml", "w") as f:
             await f.write(yaml.dump(data, Dumper=yaml.CDumper))
+        if data is None:
+            continue
         async with aiofiles.open("data.yml.2", "w") as f:
             await f.write(yaml.dump(data, Dumper=yaml.CDumper))
 
