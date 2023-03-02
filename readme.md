@@ -12,6 +12,12 @@
 
 轮询 generals.io 上指定玩家的游戏记录，解析并播报最新的记录
 
+## 命令
+
+`follow &lt;username&gt;` 关注玩家
+
+`unfollow &lt;username&gt;` 取关玩家
+
 ## 部署
 
-(待补充)
+(懒得写了QAQ)
