@@ -213,7 +213,7 @@ async def on_unfollow(event: Event, args):
 
 @on_command("list")
 async def on_list(event: Event, args):
-    message = "当前关注的玩家列表如下: "
+    message = "当前关注的玩家列表如下: \n"
     message += "\n".join(k for k, v in data["followed-users"].items() if v["enabled"])
     await bot.send(event, message=message)
 
