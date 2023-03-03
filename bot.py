@@ -222,14 +222,14 @@ async def on_list(event: Event, args):
 async def on_enable(event: Event, args):
     if event.sender["role"] in {"owner", "admin"} or event.user_id in data["super-users"]:
         data["enabled-groups"][event.group_id]["enabled"] = True
-        await bot.send("已启用")
+        await bot.send(event, message="已启用")
 
 
 @on_command("disable")
 async def on_disable(event: Event, args):
     if event.sender["role"] in {"owner", "admin"} or event.user_id in data["super-users"]:
         data["enabled-groups"][event.group_id]["enabled"] = False
-        await bot.send("已禁用")
+        await bot.send(event, message="已禁用")
 
 
 async def save_data():
