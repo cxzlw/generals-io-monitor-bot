@@ -14,9 +14,9 @@
 
 ## 命令
 
-`follow &lt;username&gt;` 关注玩家
+`follow <username>` 关注玩家
 
-`unfollow &lt;username&gt;` 取关玩家
+`unfollow <username>` 取关玩家
 
 ## 部署
 
