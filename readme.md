@@ -1,8 +1,8 @@
-# Generals.io 监控bot
+# Generals.io 监控 bot
 
 ****
 
-基于aiocqhttp与go-cqhttp开发的QQ群机器人
+基于 aiocqhttp 与 go-cqhttp 开发的 QQ 群机器人
 
 ## 用途
 
@@ -20,4 +20,4 @@
 
 ## 部署
 
-(懒得写了QAQ)
+(懒得写了 QAQ)
