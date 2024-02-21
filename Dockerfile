@@ -8,4 +8,4 @@ RUN pip install poetry
 COPY . .
 RUN poetry install --no-dev
 
-ENTRYPOINT ["poetry", "run", "python", "bot:bot"]
+ENTRYPOINT ["poetry", "run", "python", "bot"]
