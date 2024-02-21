@@ -1,9 +1,6 @@
 import asyncio
 import os
-import sys
-import time
 import traceback
-import aiocqhttp
 import pytz
 import aiofiles
 import httpx
@@ -11,7 +8,6 @@ from aiocqhttp import CQHttp, Event, Message
 import ujson
 import yaml
 import datetime
-import signal
 
 bot = CQHttp(message_class=Message)
 
