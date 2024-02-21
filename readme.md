@@ -1,8 +1,8 @@
-# Generals.io 监控bot
+# Generals.io 监控 bot
 
 ****
 
-基于aiocqhttp与go-cqhttp开发的QQ群机器人
+基于 aiocqhttp 与 go-cqhttp 开发的 QQ 群机器人
 
 ## 用途
 
@@ -14,10 +14,10 @@
 
 ## 命令
 
-`follow &lt;username&gt;` 关注玩家
+`follow <username>` 关注玩家
 
-`unfollow &lt;username&gt;` 取关玩家
+`unfollow <username>` 取关玩家
 
 ## 部署
 
-(懒得写了QAQ)
+(懒得写了 QAQ)
