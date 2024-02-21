@@ -5,7 +5,7 @@ WORKDIR /app
 
 RUN pip install poetry
 
-COPY . /app
+COPY . .
 RUN poetry install --no-dev
 
 ENTRYPOINT ["poetry", "run", "hypercorn", "bot:bot"]
