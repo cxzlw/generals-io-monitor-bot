@@ -253,4 +253,5 @@ async def start_up(event):
         loop.create_task(poll_user(user))
 
 
-bot.run("127.0.0.1", 8080)
+if __name__ == '__main__':
+    bot.run("127.0.0.1", 8080)
