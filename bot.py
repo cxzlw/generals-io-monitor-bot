@@ -254,4 +254,4 @@ async def start_up(event):
 
 
 if __name__ == '__main__':
-    bot.run("127.0.0.1", 8080)
+    bot.run("0.0.0.0", 8080)
