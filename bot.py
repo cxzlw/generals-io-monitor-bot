@@ -112,7 +112,7 @@ async def render_replay_message(replay_json):
 
     related_players = []
     for x in replay_json[0]["ranking"]:
-        if is_user_followed(x):
+        if is_user_followed(x["name"]):
             related_players.append(x["name"])
 
     message = ""
