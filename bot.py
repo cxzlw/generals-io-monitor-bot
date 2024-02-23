@@ -24,6 +24,8 @@ mode2rank = {
     "1v1": "duel"
 }
 
+seen_ids = set()
+
 command_handlers = dict()
 
 if os.path.exists("data.yml"):
@@ -73,15 +75,8 @@ def is_group_enabled(group_id):
     return group["enabled"]
 
 
-async def render(username, replay_json):
-    start_time = datetime.datetime.fromtimestamp(replay_json[0]["started"] // 1000, tz=pytz.timezone("Etc/GMT-8"))
-    mode = replay2mode[replay_json[0]["type"]]
-    replay_id = replay_json[0]["id"]
-    used_time = datetime.timedelta(seconds=replay_json[0]["turns"] / 2)
-    end_time = start_time + used_time
-    message = ""
-    message += f"{username}刚刚结束了一场对局\n"
-    message += f"模式: {mode}\n"
+async def render_player_message(username, mode):
+    message = username
     if mode != "custom":
         r = await get_stars_and_ranks(username)
 
@@ -101,10 +96,34 @@ async def render(username, replay_json):
             star_icon = "⏹"
         else:
             star_icon = "🔽"
+
         data["followed-users"][username]["rank"][mode] = now_rank
         data["followed-users"][username]["star"][mode] = now_star
-        message += f"⭐  {now_star} &#91;{star_icon}&#93; 🏆 #{now_rank} &#91;{rank_icon}&#93;\n"
+        message += f": ⭐  {now_star} &#91;{star_icon}&#93; 🏆 #{now_rank} &#91;{rank_icon}&#93;\n"
+    return message
 
+
+async def render_replay_message(replay_json):
+    start_time = datetime.datetime.fromtimestamp(replay_json[0]["started"] // 1000, tz=pytz.timezone("Etc/GMT-8"))
+    mode = replay2mode[replay_json[0]["type"]]
+    replay_id = replay_json[0]["id"]
+    used_time = datetime.timedelta(seconds=replay_json[0]["turns"] / 2)
+    end_time = start_time + used_time
+
+    related_players = []
+    for x in replay_json[0]["ranking"]:
+        if is_user_followed(x):
+            related_players.append(x["name"])
+
+    message = ""
+    message += f"{', '.join(related_players)} 刚刚结束了一场对局\n"
+    message += f"模式: {mode}\n"
+    message += "\n"
+
+    for x in related_players:
+        message += await render_player_message(x, mode)
+
+    message += "\n"
     message += f"开始时间: {start_time.strftime('%Y-%m-%d %H:%M:%S')}\n"
     message += f"结束时间: {end_time.strftime('%Y-%m-%d %H:%M:%S')}\n"
     message += f"用时: {used_time}\n"
@@ -125,11 +144,13 @@ async def poll_user(name):
     while is_user_followed(name):
         try:
             r = await get_replays(name)
-            bot.logger.debug(r[0]["started"], data["followed-users"][name]["last-seen"])
             if r[0]["started"] != data["followed-users"][name]["last-seen"]:
-                msg = await render(name, r)
-                await send_all(message=msg)
                 data["followed-users"][name]["last-seen"] = r[0]["started"]
+                if r[0]["id"] in seen_ids:
+                    continue
+                seen_ids.add(r[0]["id"])
+                msg = await render_replay_message(r)
+                await send_all(message=msg)
         except asyncio.CancelledError:
             raise
         except Exception:
