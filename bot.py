@@ -30,13 +30,9 @@ if os.path.exists("data.yml"):
     with open("data.yml", "r") as f:
         data = yaml.load(f, yaml.CLoader)
 else:
-    data = {'enabled-groups': {701924646: {'enabled': True}, 865047476: {'enabled': True}}, 'followed-users': {
-        '-Sheou-': {'enabled': True, 'last-seen': 1677389229137, 'rank': {'1v1': 0, '2v2': 0, 'FFA': 0},
-                    'star': {'1v1': 0.0, '2v2': 0.0, 'FFA': 0.0}},
-        'VVQ3R': {'enabled': True, 'last-seen': 1677590586940, 'rank': {'1v1': 0, '2v2': 0, 'FFA': 0},
-                  'star': {'1v1': 0.0, '2v2': 0.0, 'FFA': 0.0}},
-        'vvq3r': {'enabled': True, 'last-seen': 1677582598144, 'rank': {'1v1': 0, '2v2': 0, 'FFA': 0},
-                  'star': {'1v1': 0.0, '2v2': 0.0, 'FFA': 0.0}}}, 'super-users': [1259435707]}
+    data = {'enabled-groups': {0: {'enabled': False}}, 'followed-users': {
+        'username': {'enabled': False, 'last-seen': 0, 'rank': {'1v1': 0, '2v2': 0, 'FFA': 0},
+                     'star': {'1v1': 0, '2v2': 0.0, 'FFA': 0.0}}}, 'super-users': [0]}
 
 
 async def get_replays(username: str) -> list:
