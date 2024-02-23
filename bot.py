@@ -119,12 +119,9 @@ async def render_replay_message(replay_json):
     message = ""
     message += f"{', '.join(related_players)} 刚刚结束了一场对局\n"
     message += f"模式: {mode}\n"
-    message += "\n"
-
+    message += "相关玩家: \n"
     for x in related_players:
         message += await render_player_message(x, mode)
-
-    message += "\n"
     message += f"开始时间: {start_time.strftime('%Y-%m-%d %H:%M:%S')}\n"
     message += f"结束时间: {end_time.strftime('%Y-%m-%d %H:%M:%S')}\n"
     message += f"用时: {used_time}\n"
