@@ -99,7 +99,8 @@ async def render_player_message(username, mode):
 
         data["followed-users"][username]["rank"][mode] = now_rank
         data["followed-users"][username]["star"][mode] = now_star
-        message += f": ⭐  {now_star} &#91;{star_icon}&#93; 🏆 #{now_rank} &#91;{rank_icon}&#93;\n"
+        message += f": ⭐  {now_star} &#91;{star_icon}&#93; 🏆 #{now_rank} &#91;{rank_icon}&#93;"
+    message += "\n"
     return message
 
 
