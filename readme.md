@@ -2,7 +2,7 @@
 
 ****
 
-基于 aiocqhttp 与 go-cqhttp 开发的 QQ 群机器人
+基于 aiocqhttp 与 httpx 开发的 QQ 群机器人
 
 ## 用途
 
